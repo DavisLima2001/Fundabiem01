@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-/*Cpara para el ingreso */
+/*Capa para el ingreso */
 namespace CapaEntidad
 {
    public class Acceso
