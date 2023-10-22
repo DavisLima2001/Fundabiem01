@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*hola mundo*/
+/*esto es un comentario*/
+/*otro comentario*/
 namespace CapaEntidad
 {
   public  class BuscarFichaEvolucionMedica
