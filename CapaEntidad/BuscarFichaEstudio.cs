@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-/*capa para buscar la ficha*/
+/*capa para buscar la ficha   buscar*/
 
 namespace CapaEntidad
 {
