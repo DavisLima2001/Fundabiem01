@@ -1,0 +1,230 @@
+﻿
+@{
+    ViewBag.Title = "ReporteEstadistica";
+    Layout = "~/Views/Shared/_Layout5.cshtml";
+}
+
+<div class="card" id="Reporte">
+    <div class="card-header text-center">
+        <!-- Agrega la clase "text-center" -->
+        <h1>CRINAM - FUNDABIEM</h1>
+        <h3>ESTADISTICA DIARIA</h3>
+    </div>
+    <div class="card-body">
+        @*<div class="row">*@
+
+        <div id="Botones" class="form-group">
+
+
+
+
+
+
+            <div class="row" id="fi">
+                <div class="col-md-3 col-12 ">
+                    <label for="txtApellido1" class="col-form-label">Fecha Inicio</label>
+                    <input type="text" class="form-control" id="txtFechaInicio" autocomplete="off">
+                </div>
+                <div class="col-md-3 col-12 ">
+                    <label for="txtApellido1" class="col-form-label">Fecha Fin</label>
+                    <input type="text" class="form-control" id="txtFechaFin" autocomplete="off">
+                </div>
+
+                <div class="col-md-3 col-12 ">
+
+
+                    <!-- Botón Buscar -->
+                    <button type="button" class="btn btn-info" id="btBuscar2"> <i class="fas fa-search"></i> Buscar</button>
+                    <br />
+                    <br />
+                    <br />
+                </div>
+                <div class="col-md-3 col-12 ">
+
+
+                    <button type="button" class="btn btn-dark" id="Imp"> <i class="fas fa-print"></i> imprimir</button>
+                    <br />
+                    <br />
+
+                </div>
+
+
+            </div>
+        </div>
+        <input id="txtIdHistorialClinica" placeholder="Ingrese Id del Usuario" type="hidden">
+        <input id="txtId" placeholder="Ingrese Id del historial medica" type="hidden">
+        <hr />
+
+        <div class="row" id="Fila">
+            <table id="tablaEstadistica2" class="display  cell-border" style="width:100%">
+                <thead>
+
+                    <tr>
+
+                        <th class="col-no">DIA</th>
+                        <th class="col-nombre">Nombre</th>
+                        <th class="col-registro" >Registro</th>
+                        <th class="col-edad">Edad</th>
+                        <th class="col-sexo">Sexo</th>
+                        <th class="col-procedencia">Procedencia</th>
+                        <th class="col-consulta">Consulta</th>
+                        <th class="col-diagnostico">Diagnostico</th>
+                        <th class="col-comentario">Comentario</th>
+                        <th class="col-con-trasl">Con. Trasl</th>
+                        <th class="col-ra-ortesis">Ra. Ortesis</th>
+
+
+                    </tr>
+                </thead>
+
+
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br />
+
+
+
+
+
+    @*</div>*@
+
+</div>
+
+
+
+
+
+
+@section scripts{
+
+    <script>
+        document.getElementById("Imp").addEventListener("click", function () {
+            // Agregar una clase al cuerpo para cambiar la orientación
+            document.body.classList.add("orientacion-horizontal");
+
+            // Realizar la impresión
+            window.print();
+
+            // Remover la clase después de la impresión
+            document.body.classList.remove("orientacion-horizontal");
+        });
+
+        var tabladata;
+        var filaSeleccionada;
+
+        $("#txtFechaInicio").datepicker({
+            dateFormat: 'yy/mm/dd',
+            monthNames: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+            monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+            dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+            dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+            dayNamesMin: ['D', 'L', 'M', 'Mi', 'J', 'V', 'S'],
+
+        }).datepicker('setDate', new Date());
+        $("#txtFechaFin").datepicker({
+            dateFormat: 'yy/mm/dd',
+            monthNames: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+            monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+            dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+            dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+            dayNamesMin: ['D', 'L', 'M', 'Mi', 'J', 'V', 'S'],}).datepicker('setDate', new Date());
+
+
+
+           var Url = '@Url.Action("ListarTablaEstadistica3", "FichaEstadistica")' +
+            "?FechaInicio=" + $("#txtFechaInicio").val()+
+              "&FechaFin=" + $("#txtFechaFin").val()
+
+
+        tabladata = $("#tablaEstadistica2").DataTable({
+                   "paging": false,
+            "searching": false, // Esto desactiva el buscador
+
+
+                   responsive: true,
+                   ordering: false,
+            "info": false,
+
+                   "ajax": {
+                       url: Url,
+                       type: "GET",
+                       dataType: "json"
+                   },
+                   "columns":
+                       [
+
+                           { "data": "FechaRegistro" },
+                           { "data": "Nombre" },
+                           { "data": "IdHistorialClinica" },
+                           { "data": "Edad" },
+                           { "data": "Sexo" },
+                           { "data": "Procedencia" },
+                           { "data": "Consulta" },
+                           { "data": "Diagnostico" },
+                           { "data": "Comentario" },
+                           { "data": "ConsTras" },
+                           { "data": "RaOrtesis" },
+
+
+
+
+
+                ],
+            "dom": 'Bfrtip',
+            "buttons": [
+                {
+                    extend: 'pdf',
+                    className: 'btn btn-dark',
+                    text: '< i class="far fa-file-pdf"></i> PDF'
+                }
+
+            ],
+                        "language": {
+                            "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+            },
+            retrieve: true,
+            paging: false,
+            "drawCallback": function (settings) {
+                // Vuelve a cargar la tabla para que se ajuste al nuevo tamaño
+                tabladata.responsive.recalc();
+            },
+        });
+       /*     $.fn.dataTable.ext.errMode = 'throw';*/
+
+        // Detectar cambios en el tamaño de la ventana y redibujar la tabla
+        $(window).on('resize', function () {
+            tabladata.responsive.recalc();
+        });
+
+
+        ///Sirve para asignar el historial clinica a la ficha evolucion tecnica
+
+              $("#btBuscar2").on("click", function () {
+
+
+                   var NuevaUrl = '@Url.Action("ListarTablaEstadistica3", "FichaEstadistica")' +
+            "?FechaInicio=" + $("#txtFechaInicio").val()+
+              "&FechaFin=" + $("#txtFechaFin").val()
+
+                  tabladata.ajax.url(NuevaUrl).load();
+
+            });
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+}
+
+

@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "ListadoHistorialClinica";
+    Layout = "~/Views/Shared/_Layout4.cshtml";
+}
+
+
+
+<div class="card">
+    <div class="card-header text-center">
+        <!-- Agrega la clase "text-center" -->
+        <h1>LISTA DE HISTORIA CLINICA DISPONIBLE</h1>
+    </div>
+    <div class="card-body">
+        @*<div class="row">*@
+
+
+        <div class="row" id="Fila">
+            <table id="HistoriaClinica" class="display cell-borde" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID </th>
+                        <th>FECHA</th>
+                        <th>USUARIO</th>
+                        <th>MOTIVO DE CONSULTA</th>
+                        
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script>
+
+       var tabladata;
+        var filaSeleccionada;
+
+
+
+        tabladata = $("#HistoriaClinica").DataTable({
+
+            responsive: true,
+            ordering: false,
+            "ajax": {
+                 url: '@Url.Action("ListarHistorialClinicas", "HistoClinico")',
+                type: "GET",
+                dataType: "json"
+            },
+                 "columns": [
+                     { "data": "IdHistorialClinica" },
+                     { "data":"Fecha"},
+                     { "data": "Nombre" },
+                     { "data": "MotivoConsulta" }
+
+                 ],
+                 "language": {
+                     "url": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json"
+                 }
+
+
+
+             });
+
+       
+
+
+
+    </script>
+
+
+}
+
+
+

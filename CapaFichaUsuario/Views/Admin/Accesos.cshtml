@@ -1,0 +1,378 @@
+﻿
+@{
+    ViewBag.Title = "Accesos";
+    Layout = "~/Views/Shared/_Layout6.cshtml";
+}
+
+
+<br />
+
+<div class="card">
+    <div class="card-header" style="font-size:70px;text-align:center">
+        <i class="fa fa-user-plus"></i> ACCESOS FUNDABIEM
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-dark" onclick="abrilModal(null)">
+                    <span class="fa fa-user-plus"> </span>
+                    NUEVO ACCESO
+
+                </button>
+            </div>
+        </div>
+        <hr />
+
+        <table id="Accesos" class="display cell-borde" style="width:100%">
+            <thead style="background-color:darkgray; color:black">
+                <tr>
+                    <th>Id</th>
+                    <th>FECHA REGISTROS</th>
+                    <th>CORREO</th>
+                    @*<th>CONTRASEÑA</th>*@
+                    <th>Empleado</th>
+
+                    <th>ACTIVO</th>
+
+
+
+                    <th> </th>
+
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    @*Modal*@
+    <div class="modal fade" id="FormUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ACCESOS</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-12">
+
+                        <input type="hidden" class="form-control" id="txtIdaAcceso" value="0">
+                        <label for="Tratamiento" class="form-label"> Correo</label>
+                        <input type="text" class="form-control" id="txtCorreo" autocomplete="off" style="border-color:black">
+                        <br />
+                        <label for="Tratamiento" class="form-label">Contrseña</label>
+                        <input type="text" class="form-control" id="txtContraseña" autocomplete="off" style="border-color:black">
+                        <br />
+                        <label class="form-label">ACTIVO :</label>
+                        <select id="cboactivo" class="form-select" aria-label="Default select exampl" style="border-color:black">
+
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                        </select>
+                        <br />
+
+                        <label class="form-label">Empleado :</label>
+                        <select id="cboEmpleado" class="form-control" style="width:400px">
+                        </select>
+
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12" style="background-color:chartreuse">
+                            <div id="mensajeError" class="alert alert-danger" role="alert">
+                                A simple danger alert—check it out!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="background-color:lavender">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <span>X </span>
+                        Cerrar
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="Guardar()" id="boton">
+                        <span class="fas fa-download"></span>
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @section scripts{
+        <script>
+
+        var tabladata;
+        var filaSeleccionada;
+
+     
+            tabladata = $("#Accesos").DataTable({
+
+            responsive: true,
+            ordering: false,
+            "ajax": {
+                 url: '@Url.Action("ListarAccesos", "Admin")',
+                type: "GET",
+                dataType: "json"
+
+            },
+                 "columns": [
+                     { "data":"IdAcceso" },
+                     { "data": "Fecha" },
+                     { "data": "Correo" },
+                    
+                 /*    { "data": "Contraseña" },*/
+                     { "data": "oEmpleado", "render": function (data) { return data.PrimerNombre } },
+                    
+                     {
+                         "data": "Activo", "render": function (valor) {
+                             if (valor) {
+                                 return '<span class="badge bg-success">Si</span>'
+                             } else {
+                                 return '<span class="badge bg-danger">No</span>'
+                             }
+                         }
+                     },
+
+                {
+                    "defaultContent": ' <button type="button" class="btn btn-outline-secondary btn-sm btn-editar"><i class="fas fa-pen"></i></button>' +
+                        ' <button type="button" class="btn btn-outline-dark btn-sm ms-2 btn-eliminar"><i class="fas fa-trash"></i></button>',
+                    "orderable": false,
+                    "searchable": false,
+                    "width": "90px"
+                }
+
+                 ],
+                 "language": {
+                     "url": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json"
+                 }
+
+
+
+             });
+
+            $.fn.dataTable.ext.errMode = 'throw';
+
+              jQuery.ajax({
+            url: '@Url.Action("ListarEmpleados", "Admin")',
+            type: "GET",
+            data: null,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+              success: function (data) {
+
+                  console.log(data)
+
+                  $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cboEmpleado");
+                $.each(data.data, function (index, item) {
+
+                    $("<option>").attr({ "value": item.IdEmpleado }).text(item.PrimerNombre + ' ' + item.PrimerApellido).appendTo("#cboEmpleado");
+                })
+            },
+            error: function (error) {
+                console.log(error)
+            }
+          });
+
+
+
+            function abrilModal(json)
+            {
+
+           
+
+                $("#txtIdaAcceso").val(0);
+                $("#txtCorreo").val("");
+                $("#txtContraseña").val("");
+                $("#cboactivo").val($("#cboactivo option:first").val());
+                $("#cboEmpleado").val($("#cboEmpleado option:first").val());
+
+
+                $("#mensajeError").hide();
+
+
+
+                if (json != null) {
+                    $("#txtIdaAcceso").val(json.IdAcceso);
+                    $("#txtCorreo").val(json.Correo);
+                    $("#txtContraseña").val("");
+                    $("#cboactivo").val(json.Activo == true ? 1 : 0);
+                    $("#cboEmpleado").val(json.oEmpleado.IdEmpleado);
+                    
+                }
+
+                $("#FormUsuario").modal("show");
+             }
+
+            $("#Accesos tbody").on("click touchstart", '.btn-editar', function (event) {
+                event.stopPropagation();
+                event.preventDefault();
+
+
+                var clickedElement = $(event.target);
+                var isLi = clickedElement.closest("li").length > 0;
+                var filaSeleccionada1 = isLi ? clickedElement.closest("li") : clickedElement.closest("tr");
+
+
+                var data = tabladata.row(filaSeleccionada1).data();
+                    console.log(data);
+                    abrilModal(data)
+
+
+
+
+        })
+      
+
+            $("#Accesos tbody").on("click touchstart", '.btn-eliminar', function (event) {
+
+                event.stopPropagation();
+                event.preventDefault();
+
+
+                var clickedElement = $(event.target);
+                var isLi = clickedElement.closest("li").length > 0;
+
+                var filaSeleccionada = isLi ? clickedElement.closest("li") : clickedElement.closest("tr");
+                var data = tabladata.row(filaSeleccionada).data();
+
+            swal({
+                title: "Esta Seguro?",
+                text: "¿Desea eliminar el acceso al sistema ",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-primary",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: true
+            },
+                function () {
+                    swal.close();
+
+                      jQuery.ajax({
+                   url: '@Url.Action("EliminarAcceso", "Admin")',
+                          type: "POST",
+                          data: JSON.stringify({ id: data.IdAcceso }),
+                   dataType: "json",
+                   contentType: "application/json; charset=utf-8",
+                   success: function (data) {
+
+
+
+                      if (data.resultado) {
+
+                          tabladata.row(filaSeleccionada).remove().draw();
+                     } else {
+
+                           swal("No se pudo eliminar", data.mensaje, "error")
+                       }
+                  },
+                   error: function (error) {
+                   console.log(error)
+                    }
+               });
+
+
+
+
+                });
+
+            console.log(data)
+
+
+        })
+            /*      txtIdaAcceso txtCorreo txtContraseña cboactivo cboEmpleado Accesos*/
+
+            function Guardar() {
+                debugger;
+            var Ecceso = {
+              
+                IdAcceso: $("#txtIdaAcceso").val(),
+                Correo: $("#txtCorreo").val(),
+                Contraseña: $("#txtContraseña").val(),
+                Activo: $("#cboactivo").val() == 1 ? true : false,
+               
+                oEmpleado: {
+                    IdEmpleado: $("#cboEmpleado option:selected").val(),
+                    PrimerNombre: $("#cboEmpleado option:selected").text()
+                },
+
+            }
+              jQuery.ajax({
+                url: '@Url.Action("GuardarAcceso", "Admin")',
+                type: "POST",
+                  data: JSON.stringify({ objeto: Ecceso }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    $(".modal-body").LoadingOverlay("hide");
+
+
+
+                    if (Ecceso.IdAcceso == 0) {
+
+                        if (data.resultado != 0) {
+
+                            Ecceso.IdAcceso = data.resultado;
+
+
+                            //tabladata.row.add(Ecceso).draw(false);
+                            location.reload();
+                            $("#FormUsuario").modal("hide");
+
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+
+
+                    } else {
+
+                        if (data.resultado) {
+                            location.reload();
+                            //tabladata.row(filaSeleccionada).data(Ecceso).draw(false);
+                            $("#FormUsuario").modal("hide");
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    }
+
+                  },
+                  error: function (error) {
+                      $(".modal-body").LoadingOverlay("hide");
+                      $("#mensajeError").text("Error Ajax");
+                      $("#mensajeError").show();
+                  },
+                  beforeSend: function () {
+                      $(".modal-body").LoadingOverlay("show", {
+                          imageResizeFactor: 2,
+                          text: "Cargando...",
+                          size: 14
+                      })
+                  }
+
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+        </script>
+
+
+    }
+
+
+
+

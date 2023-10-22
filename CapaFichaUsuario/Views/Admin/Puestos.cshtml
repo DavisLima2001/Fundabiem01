@@ -1,0 +1,306 @@
+﻿
+@{
+    ViewBag.Title = "Puestos";
+    Layout = "~/Views/Shared/_Layout6.cshtml";
+}
+
+
+
+<br />
+
+<div class="card">
+    <div class="card-header" style="font-size:70px;text-align:center">
+        <i class="fa fa-user-plus"></i> PUESTOS FUNDABIEM
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-dark" onclick="abrilModal(null)">
+                    <span class="fa fa-user-plus"> </span>
+                    NUEVO PUESTO
+
+                </button>
+            </div>
+        </div>
+        <hr />
+
+        <table id="Puesto" class="display cell-borde" style="width:100%">
+            <thead style="background-color:darkgray; color:black">
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre de puesto</th>
+
+
+                    <th> </th>
+
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="FormUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <!-- Cambio la clase modal-dialog y agrego modal-dialog-centered para centrar el modal -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">PUESTOS</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-12">
+                        <!-- Utilizo una sola columna para contenido -->
+                        <input type="hidden" class="form-control" id="txtIdPuesto" value="0">
+                        <label for="Tratamiento" class="form-label">INGRESE NOMBRE DEL PUESTO</label>
+                        <input type="text" class="form-control" id="txtNombre" autocomplete="off" style="border-color:black">
+                        <br />
+                   
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12" style="background-color:chartreuse">
+                            <div id="mensajeError" class="alert alert-danger" role="alert">
+                                A simple danger alert—check it out!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="background-color:lavender">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <span>X </span>
+                        Cerrar
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="Guardar()" id="boton">
+                        <span class="fas fa-download"></span>
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section scripts{
+        <script>
+
+        var tabladata;
+        var filaSeleccionada;
+
+
+
+            tabladata = $("#Puesto").DataTable({
+
+            responsive: true,
+            ordering: false,
+            "ajax": {
+                 url: '@Url.Action("ListarPuestos", "Admin")',
+                type: "GET",
+                dataType: "json"
+
+            },
+                 "columns": [
+                     { "data":"IdPuesto" },
+                     { "data":"NombrPuesto"},
+
+                {
+                    "defaultContent": ' <button type="button" class="btn btn-outline-secondary btn-sm btn-editar"><i class="fas fa-pen"></i></button>' +
+                        ' <button type="button" class="btn btn-outline-dark btn-sm ms-2 btn-eliminar"><i class="fas fa-trash"></i></button>',
+                    "orderable": false,
+                    "searchable": false,
+                    "width": "90px"
+                }
+
+                 ],
+                 "language": {
+                     "url": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json"
+                 }
+
+
+
+             });
+
+            $.fn.dataTable.ext.errMode = 'throw';
+            function abrilModal(json)
+            {
+                $("#txtIdPuesto").val(0);
+                $("#txtNombre").val("");
+           
+
+
+                $("#mensajeError").hide();
+
+
+
+                if (json != null) {
+                    $("#txtIdPuesto").val(json.IdPuesto);
+                    $("#txtNombre").val(json.NombrPuesto);
+
+                }
+
+                $("#FormUsuario").modal("show");
+             }
+
+            $("#Puesto tbody").on("click touchstart", '.btn-editar', function (event) {
+                event.stopPropagation();
+                event.preventDefault();
+
+
+                var clickedElement = $(event.target);
+                var isLi = clickedElement.closest("li").length > 0;
+                var filaSeleccionada1 = isLi ? clickedElement.closest("li") : clickedElement.closest("tr");
+
+
+                var data = tabladata.row(filaSeleccionada1).data();
+                    console.log(data);
+                    abrilModal(data)
+
+
+
+
+        })
+
+            $("#Puesto tbody").on("click touchstart", '.btn-eliminar', function (event) {
+
+                event.stopPropagation();
+                event.preventDefault();
+
+
+                var clickedElement = $(event.target);
+                var isLi = clickedElement.closest("li").length > 0;
+
+                var filaSeleccionada = isLi ? clickedElement.closest("li") : clickedElement.closest("tr");
+                var data = tabladata.row(filaSeleccionada).data();
+
+            swal({
+                title: "Esta Seguro?",
+                text: "¿Desea eliminar la donacion para el puesto",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-primary",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: true
+            },
+                function () {
+                    swal.close();
+
+                      jQuery.ajax({
+                   url: '@Url.Action("EliminarPuesto", "Admin")',
+                          type: "POST",
+                          data: JSON.stringify({ id: data.IdPuesto }),
+                   dataType: "json",
+                   contentType: "application/json; charset=utf-8",
+                   success: function (data) {
+
+
+
+                      if (data.resultado) {
+
+                          tabladata.row(filaSeleccionada).remove().draw();
+                     } else {
+
+                           swal("No se pudo eliminar", data.mensaje, "error")
+                       }
+                  },
+                   error: function (error) {
+                   console.log(error)
+                    }
+               });
+
+
+
+
+                });
+
+            console.log(data)
+
+
+        })
+
+
+            function Guardar() {
+                debugger;
+            var Puesto = {
+                // txtIdPuesto txtNombre
+                IdPuesto: $("#txtIdPuesto").val(),
+                NombrPuesto: $("#txtNombre").val() ,
+
+            }
+              jQuery.ajax({
+                url: '@Url.Action("GuardarPuesto", "Admin")',
+                type: "POST",
+                  data: JSON.stringify({ objeto: Puesto }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    $(".modal-body").LoadingOverlay("hide");
+
+
+
+                    if (Puesto.IdPuesto == 0) {
+
+                        if (data.resultado != 0) {
+
+                            Puesto.IdPuesto = data.resultado;
+
+
+                           /* tabladata.row.add(Puesto).draw(false);*/
+                            location.reload();
+                            $("#FormUsuario").modal("hide");
+
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+
+
+                    } else {
+
+                        if (data.resultado) {
+                            location.reload();
+                          /*  tabladata.row(filaSeleccionada).data(Puesto).draw(false);*/
+                            $("#FormUsuario").modal("hide");
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    }
+
+                  },
+                  error: function (error) {
+                      $(".modal-body").LoadingOverlay("hide");
+                      $("#mensajeError").text("Error Ajax");
+                      $("#mensajeError").show();
+                  },
+                  beforeSend: function () {
+                      $(".modal-body").LoadingOverlay("show", {
+                          imageResizeFactor: 2,
+                          text: "Cargando...",
+                          size: 14
+                      })
+                  }
+
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+        </script>
+
+
+    }
+
+
+
+
+
+

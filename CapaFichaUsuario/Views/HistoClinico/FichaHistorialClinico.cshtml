@@ -1,0 +1,1132 @@
+﻿
+@{
+    ViewBag.Title = "FichaHistorialClinico";
+    Layout = "~/Views/Shared/_Layout5.cshtml";
+}
+
+
+
+<div class="card">
+    <div class="card-header text-center">
+        <!-- Agrega la clase "text-center" -->
+        <h1>HISTORIA CLINICA</h1>
+    </div>
+    <div class="card-body">
+        @*<div class="row">*@
+        <div id="Botones" class="form-group">
+
+            <div class="row" id="miFila">
+                <div class="col-md-3 col-12 ">
+                    <!-- Agrega un formulario o campos de entrada aquí -->
+                    <!-- Botón Guardar -->
+                    <button type="button" class="btn btn-primary" onclick="Guardar()"> <i class="fas fa-save"></i> Guardar</button>
+                    <br />
+                    <br />
+
+                </div>
+                <br />
+                <div class="col-md-3 col-12 ">
+                    <!-- Botón Actualizar -->
+                    <button type="button" class="btn btn-success" onclick="Actualizar()"> <i class="fas fa-sync"></i> Actualizar</button>
+                    <br />
+                    <br />
+
+                </div>
+                <br />
+                <div class="col-md-3  col-12 ">
+
+                    <!-- Botón limpiar -->
+                    <button type="button" class="btn btn-success" onclick="LimpiarFormulario()"> <i class="fas fa-eraser"></i> Limmpiar</button>
+                    <br />
+                    <br />
+
+                </div>
+                <div class="col-md-2 col-12 ">
+
+                    <!-- Botón imprimir -->
+                    <button type="button" class="btn btn-dark" onclick="print()" > <i class="fas fa-print"></i> imprimir</button>
+                    <br />
+                    <br />
+
+                </div>
+
+            </div>
+
+            <div class="row" id="miFila">
+                <div class="col-md-3 col-12 ">
+                    <label for="txtApellido1" class="col-form-label">1er. Apellido: </label>
+                    <input type="text"  style=" border: 1px solid black;" class="form-control" id="txtPrimerApellidob" autocomplete="off">
+                </div>
+                <div class="col-md-3 col-12 ">
+                    <label for="txtNombre1" class="col-form-label">1er. Nombre: </label>
+                    <input type="text" style=" border: 1px solid black;" class="form-control" id="txtPrimerNombreb" autocomplete="off">
+                </div>
+                <div class="col-md-3 col-12 ">
+
+
+                    <!-- Botón asignar -->
+                    <button type="button" class="btn btn-info" id="btBuscar"> <i class="fas fa-check"></i> Asignar Usuario</button>
+
+                    <br />
+                    <br />
+                    <br />
+                </div>
+
+                <div class="col-md-3 col-12 d-flex flex-row align-items-center">
+                    <!-- Botón Buscar -->
+                    <button type="button" class="btn btn-info" id="btBuscar2">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+
+                    <!-- Espacio entre el botón y el input -->
+                    <div style="margin-left: 10px;"></div>
+
+                    <!-- Input a la derecha del botón -->
+                   
+                    <input type="text" class="form-control" id="txtIdHistorialClinica" placeholder="No. Historial" autocomplete="off">
+                </div>
+
+            </div>
+            <input id="txtIdUsuario" placeholder="Ingrese Id del Usuario" type="hidden">
+           
+        </div>
+        <br />
+        <div class="row" id="Fila">
+            <div class="col-md-4 col-12 d-flex align-items-center">
+
+                <label for="txtFecha" class="col-form-label">FECHA:</label>
+                <input type="text" class="form-control" id="txtFecha" autocomplete="off" readonly>
+
+            </div>
+            <div class="col-md-4 col-12 d-flex align-items-center ">
+                <label for="txtEdad" class="col-form-label">ED:</label>
+                <input type="text" class="form-control" id="txtEdad" autocomplete="off" readonly>
+            </div>
+            <div class="col-md-4 col-12 d-flex align-items-center ">
+                <label for="txtSexo" class="col-form-label">SEXO:</label>
+                <input type="text" class="form-control" id="txtSexo" autocomplete="off" readonly>
+                @*<select class="form-control" id="txtSexo" autocomplete="off" readonly>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+
+                </select>*@
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-4 col-12 d-flex align-items-center">
+
+                <label for="txt1oAPELLIDO" class="col-form-label">1oAPELLIDO:</label>
+                <input type="text" class="form-control" id="txt1oAPELLIDO" autocomplete="off" readonly>
+
+            </div>
+            <div class="col-md-4 col-12 d-flex align-items-center ">
+                <label for="txt2DoAPELLIDO" class="col-form-label">2DoAPELLIDO:</label>
+                <input type="text" class="form-control" id="txt2DoAPELLIDO" autocomplete="off" readonly> 
+            </div>
+            <div class="col-md-4 col-12 d-flex align-items-center ">
+                <label for="txtNOMBRE" class="col-form-label">NOMBRE:</label>
+                <input type="text" class="form-control" id="txtNOMBRE" autocomplete="off" readonly>
+            </div>
+        </div>
+
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+
+                <label for="txtENCARGADO" class="col-form-label">ENCARGADO:</label>
+                <input type="text" class="form-control" id="txtENCARGADO" autocomplete="off"readonly>
+
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtENCARGADO" class="col-form-label">ANAMNESIS</label>
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtMOTIVODECONSULTA" class="col-md-2 col-form-label">MOTIVO DE CONSULTA</label>
+                <input type="text" class="form-control" id="txtMOTIVODECONSULTA" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtMOTIVODECONSULTA" class="col-form-label">ANTECEDENTES FAMILIARES</label>
+
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtAntecedentesGineco" class="col-md-2 col-form-label">Antecedentes Gineco-Obstetricos en la madre</label>
+                <input type="text" class="form-control" id="txtAntecedentesGineco" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-3 col-12 d-flex align-items-center">
+                <label for="txtE" class="col-form-label">E/</label>
+                <input type="text" class="form-control" id="txtE" autocomplete="off">
+            </div>
+            <div class="col-md-3 col-12 d-flex align-items-center">
+                <label for="txtab" class="col-form-label">ab</label>
+                <input type="text" class="form-control" id="txtab" autocomplete="off">
+            </div>
+            <div class="col-md-3 col-12 d-flex align-items-center">
+                <label for="txtHijosVivos" class="col-md-2 col-form-label">Hijos vivos</label>
+                <input type="text" class="form-control" id="txtHijosVivos" autocomplete="off">
+            </div>
+            <div class="col-md-3 col-12 d-flex align-items-center">
+                <label for="txtEstadoSalud" class="col-md-2 col-form-label">Estado de salid de H.V</label>
+                <input type="text" class="form-control" id="txtEstadoSalud" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtHijosMuertos" class="col-md-2 col-form-label">Hijos Muertos, Las causas</label>
+                <input type="text" class="form-control" id="txtHijosMuertos" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtPadres" class="col-form-label">Padres</label>
+                <input type="text" class="form-control" id="txtPadres" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtOtros" class="col-form-label">Otros</label>
+                <input type="text" class="form-control" id="txtOtros" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtAntecedentesMedicos" class="col-form-label">ANTECENTES MEDICOS</label>
+
+            </div>
+        </div>
+
+        <div class="row" id="Fila">
+            <div class="col-md-5 col-12 d-flex align-items-center">
+                <label for="txtPesoNacer" class="col-md-2 col-form-label">Peso al nacer</label>
+                <input type="text" class="form-control" id="txtPesoNacer" autocomplete="off">
+            </div>
+            <div class="col-md-7 col-12 d-flex align-items-center">
+                <label for="txtDuracionEmbarzo" class="col-md-2 col-form-label">Duracion del Embarazo</label>
+                <input type="text" class="form-control" id="txtDuracionEmbarzo" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtProblemasGestionables" class="col-md-2 col-form-label">Problemas Gestionables</label>
+                <input type="text" class="form-control" id="txtProblemasGestionables" autocomplete="off">
+            </div>
+        </div>
+
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtMedicamentosEmbarazo" class="col-md-2 col-form-label">Medicamentos durante el Embarazo</label>
+                <input type="text" class="form-control" id="txtMedicamentosEmbarazo" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-5 col-12 d-flex align-items-center">
+                <label for="txtTabaquismo" class="col-form-label">Tabaquismo</label>
+                <input type="text" class="form-control" id="txtTabaquismo" autocomplete="off">
+            </div>
+            <div class="col-md-7 col-12 d-flex align-items-center">
+                <label for="txtAlcohol" class="col-form-label">Alcohol</label>
+                <input type="text" class="form-control" id="txtAlcohol" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-5 col-12 d-flex align-items-center">
+                <label for="txtDuracionTrabajo" class="col-md-2 col-form-label">Duracion del trabajo de parto</label>
+                <input type="text" class="form-control" id="txtDuracionTrabajo" autocomplete="off">
+            </div>
+            <div class="col-md-7 col-12 d-flex align-items-center">
+                <label for="txtSufrumientoFetal" class="col-md-2 col-form-label">Sufrimiento Fetal</label>
+                <input type="text" class="form-control" id="txtSufrumientoFetal" autocomplete="off">
+            </div>
+
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-5 col-12 d-flex align-items-center">
+                <label for="txtVaginal" class="col-form-label">Vaginal</label>
+                <input type="text" class="form-control" id="txtVaginal" autocomplete="off">
+            </div>
+            <div class="col-md-7 col-12 d-flex align-items-center">
+                <label for="txtCesarea" class="col-form-label">Cesarea</label>
+                <input type="text" class="form-control" id="txtCesarea" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-5 col-12 d-flex align-items-center">
+                <label for="txtVaginal" class="col-form-label">PERIODO NEONATAL</label>
+            </div>
+
+        </div>
+
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtEstadoAlNacer" class="col-md-2 col-form-label">Estado al Nacer</label>
+                <input type="text" class="form-control" id="txtEstadoAlNacer" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtApgar" class="col-form-label">Apgar</label>
+                <input type="text" class="form-control" id="txtApgar" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtDesarrollo" class="col-form-label">DESARROLLO</label>
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtEdadmpezoA" class="col-md-2 col-form-label">Edad en que empezo a:</label>
+                <input type="text" class="form-control" id="txtEdadmpezoA" autocomplete="off">
+            </div>
+        </div>
+
+        <div class="row" id="Fila">
+            <div class="col-md-4 col-12 d-flex align-items-center">
+                <label for="txtSostenerCabeza" class="col-md-2 col-form-label">Sostener la Cabeza:</label>
+                <input type="text" class="form-control" id="txtSostenerCabeza" autocomplete="off">
+            </div>
+            <div class="col-md-4 col-12 d-flex align-items-center">
+                <label for="txtSonreir" class="col-form-label">Sonreir:</label>
+                <input type="text" class="form-control" id="txtSonreir" autocomplete="off">
+            </div>
+            <div class="col-md-4 col-12 d-flex align-items-center">
+                <label for="txtRodarAlLado" class="col-md-2 col-form-label">Rodar al Lado:</label>
+                <input type="text" class="form-control" id="txtRodarAlLado" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-4 col-12 d-flex align-items-center">
+                <label for="txtSentarseSolo" class="col-md-2 col-form-label">Sentarse Solo:</label>
+                <input type="text" class="form-control" id="txtSentarseSolo" autocomplete="off">
+            </div>
+            <div class="col-md-4 col-12 d-flex align-items-center">
+                <label for="txtPararse" class="col-form-label">Pararse:</label>
+                <input type="text" class="form-control" id="txtPararse" autocomplete="off">
+            </div>
+            <div class="col-md-4 col-12 d-flex align-items-center">
+                <label for="txtAndar" class="col-form-label">Andar</label>
+                <input type="text" class="form-control" id="txtAndar" autocomplete="off">
+            </div>
+
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-5 col-12 d-flex align-items-center">
+                <label for="txtCanaminarSolo" class="col-md-2 col-form-label">Canaminar Solo:</label>
+                <input type="text" class="form-control" id="txtCanaminarSolo" autocomplete="off">
+            </div>
+            <div class="col-md-7 col-12 d-flex align-items-center">
+                <label for="txtHablar" class="col-form-label">Hablar:</label>
+                <input type="text" class="form-control" id="txtHablar" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12  col-12 d-flex align-items-center">
+                <label for="txtVacunaciones" class="col-form-label">Vacunaciones:</label>
+                <input type="text" class="form-control" id="txtVacunaciones" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtEnfermedades" class="col-form-label">Enfermedades:</label>
+                <input type="text" class="form-control" id="txtEnfermedades" autocomplete="off">
+            </div>
+        </div>
+
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtAntecedentesQx" class="col-form-label">Antecedentes Qx:</label>
+                <input type="text" class="form-control" id="txtAntecedentesQx" autocomplete="off">
+            </div>
+        </div>
+        <div class="row" id="Fila">
+            <div class="col-md-12 col-12 d-flex align-items-center">
+                <label for="txtDiagnosticos" class="col-form-label">Diagnosticos:</label>
+               
+                <textarea class="form-control" id="txtDiagnosticos" autocomplete="off"></textarea>
+                @*<input type="text" class="form-control" id="txtDiagnosticos" autocomplete="off">*@
+            </div>
+        </div>
+
+        <div class="row" id="Fila">
+            <br />
+            <br />
+            <br />
+            <div class="col-md-4 col-12 d-flex align-items-center">
+                <button id="BotonTramiento" type="button" class="btn btn-primary" onclick="abrilModal(null)"> <i class="fas fa-save"></i> Asignar Tratamientos</button>
+            </div>
+            <div class="col-md-8 col-12 d-flex align-items-center">
+                <label for="txtOtros" class="col-md-2 col-form-label" id="Evoluciones">TRATAMIENTO </label>
+            </div>
+        </div>
+
+        <div class="row" id="Fila">
+            <table id="Tratamientoo" class="display cell-borde" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Fecha</th>
+                        <th>Tratamiento</th>
+                        <th>Duracion</th>
+                        
+                        <th>Ft</th>
+
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-row-id="0">
+                        <!-- Contenido de la fila -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+      
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="FormUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Cambio la clase modal-dialog y agrego modal-dialog-centered para centrar el modal -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Asignacion de medicamentos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" >
+                <div class="col-sm-12">
+                    <!-- Utilizo una sola columna para contenido -->
+                    <input type="hidden" class="form-control" id="txtIdTablaTratamiento" value="0">
+                    <input type="hidden" class="form-control" id="txtIdHistorialClinica2">
+                    <input type="hidden" class="form-control" id="txtFecha">
+                    <label for="Tratamiento" class="form-label">Tratamiento</label>
+                    <input type="text" class="form-control" id="txtTratamiento" autocomplete="off" style="border-color:black">
+                    <br />
+                    <label for="Duracion" class="form-label">Duracion</label>
+                    <input type="text" class="form-control" id="txtDuracion" autocomplete="off" style="border-color:black">
+                    <br />
+                    <label for="no" class="form-label">No</label>
+                    <input type="text" class="form-control" id="txtno" autocomplete="off" style="border-color:black">
+                    <br />
+                    <label for="ft" class="form-label">ft</label>
+                    <input type="text" class="form-control" id="txtft" autocomplete="off" style="border-color:black">
+
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12" style="background-color:chartreuse">
+                        <div id="mensajeError" class="alert alert-danger" role="alert">
+                            A simple danger alert—check it out!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:lavender">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <span>X </span>
+                    Cerrar
+                </button>
+                <button type="button" class="btn btn-primary" onclick="Guardar2()" id="boton">
+                    <span class="fas fa-download"></span>
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+        var tabladata;
+        var filaSeleccionada;
+        
+        /*  int IdHistorialClinica  txtIdHistorialClinica * /*/
+
+              var Url = '@Url.Action("ListarTratamiento2", "HistoClinico")' +
+                  "?IdHistorialClinica=" + $("#txtIdHistorialClinica").val() ,
+
+
+        tabladata = $("#Tratamientoo").DataTable({
+            "paging": false,
+            "searching": false, // Esto desactiva el buscador
+
+            responsive: true,
+            ordering: false,
+            "info": false,
+                        "ajax": {
+                            url:Url,
+                            type: "GET",
+                            dataType: "json"
+                        },
+                        "columns":
+                        [
+                                { "data": "no" },
+                                { "data": "fecha" }, 
+                                { "data": "tratamiento" },
+                                { "data": "duracion" },
+
+                               
+                                { "data": "ft" },
+                            {
+                                "defaultContent": ' <button type="button" class="btn btn-outline-secondary btn-sm btn-editar"><i class="fas fa-pen"></i></button>' +
+                                    ' <button type="button" class="btn btn-outline-dark btn-sm ms-2 btn-eliminar"><i class="fas fa-trash"></i></button>',
+                                "orderable": false,
+                                "searchable": false,
+                                "width": "90px"
+                            }
+                        ],
+                        "language": {
+                            "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+            },
+            retrieve: true,
+            paging: false,
+            "createdRow": function (row, data, dataIndex) {
+                // Agregar el atributo data-row-id a cada fila con un valor único (puedes usar el índice de datos)
+                $(row).attr('data-row-id', dataIndex);
+                console.log("dataIndex:", dataIndex,data);
+
+            }
+        });
+            $.fn.dataTable.ext.errMode = 'throw';
+
+              function mostrar() {
+
+        var nuevaurl = '@Url.Action("ListarTratamiento2", "HistoClinico")' +
+            "?IdHistorialClinica=" + $("#txtIdHistorialClinica").val()
+                /*  int IdHistorialClinica  txtIdHistorialClinica * /*/
+            tabladata.ajax.url(nuevaurl).load();
+
+        }
+
+
+
+        @*$("#btBuscar").on("click", function () {
+                  var nueva_url = '@Url.Action("ListaGastosMedicos", "Especialista")' +
+                      "?IdCita=" + $("#cita").val()
+
+            tabladata.ajax.url(nueva_url).load();
+
+
+
+
+
+        })*@
+
+
+
+
+        function abrilModal(json) {
+            //$("#txtid").val(0);
+
+
+      
+
+
+            $("#txtno").val(0);
+            $("#txtTratamiento").val(" ");
+            $("#txtDuracion").val(" ");
+            $("#ft").val(" ");
+            $("#txtIdTablaTratamiento").val(0);
+    
+            $("#mensajeError").hide();
+
+
+
+            if (json != null) {
+
+                $("#txtIdTablaTratamiento").val(json.IdTablaTratamiento);
+                $("#txtTratamiento").val(json.tratamiento); 
+                    $("#txtFecha").val(json.fecha);
+                $("#txtDuracion").val(json.duracion);
+                $("#txtno").val(json.no);
+                $("#txtft").val(json.ft);
+                $("#txtIdHistorialClinica2").val(json.IdHistorialClinica);
+
+
+
+
+            }
+
+            $("#FormUsuario").modal("show");
+        }
+
+
+                   //txtIdUsuario txtMOTIVODECONSULTA txtAntecedentesGineco txtE txtab txtHijosVivos txtEstadoSalud txtHijosMuertos txtPadres txtOtros
+        //txtPesoNacer txtDuracionEmbarzo txtProblemasGestionables txtMedicamentosEmbarazo txtTabaquismo txtAlcohol txtDuracionTrabajo
+        //txtSufrumientoFetal txtVaginal txtCesarea txtEstadoAlNacer txtApgar txtEdadmpezoA txtSostenerCabeza txtSonreir txtRodarAlLado
+        //txtSentarseSolo txtPararse txtAndar txtCanaminarSolo txtHablar txtVacunaciones txtEnfermedades txtAntecedentesQx
+
+
+    function Guardar() {
+    debugger;
+    var FichaHistorialClinica = {
+        IdUsuario: $("#txtIdUsuario").val(),
+        MotivoConsulta: $("#txtMOTIVODECONSULTA").val(),
+        AntecedentMadre: $("#txtAntecedentesGineco").val(),
+        e: $("#txtE").val(),
+        ab: $("#txtab").val(),
+        HijosVivos: $("#txtHijosVivos").val(),
+        EstadoSaludHv: $("#txtEstadoSalud").val(),
+        HijosMuerteCausa: $("#txtHijosMuertos").val(),
+        Padres: $("#txtPadres").val(),
+        Otros: $("#txtOtros").val(),
+        PesoNacer: $("#txtPesoNacer").val(),
+        DuracionEmbarazo: $("#txtDuracionEmbarzo").val(),
+        ProblemaGestional: $("#txtProblemasGestionables").val(),
+        MedicinaDuranteEmbarazo: $("#txtMedicamentosEmbarazo").val(),
+        Tabaquismo: $("#txtTabaquismo").val(),
+        Alcohol: $("#txtAlcohol").val(),
+        DuracionParto: $("#txtDuracionTrabajo").val(),
+        SufrimientoFetal: $("#txtSufrumientoFetal").val(),
+
+        Vaginal: $("#txtVaginal").val(),
+        Cesarea: $("#txtCesarea").val(),
+        EstadoNacer: $("#txtEstadoAlNacer").val(),
+
+        Apgar: $("#txtApgar").val(),
+        SostenerCabeza: $("#txtSostenerCabeza").val(),
+        Sonreir: $("#txtSonreir").val(),
+        RodarAlLado: $("#txtRodarAlLado").val(),
+        SentarseSolo: $("#txtSentarseSolo").val(),
+        Pararse: $("#txtPararse").val(),
+        Andar: $("#txtAndar").val(),
+        CaminarSolo: $("#txtCanaminarSolo").val(),
+        Hablar: $("#txtHablar").val(),
+        Vacunaciones: $("#txtVacunaciones").val(),
+        Enfermedades: $("#txtEnfermedades").val(),
+        AntecedentesQx: $("#txtAntecedentesQx").val(),
+        Diagnosticos: $("#txtDiagnosticos").val()
+        
+    }
+
+    jQuery.ajax({
+        url: '@Url.Action("GuardarFichaHistorialClinica", "HistoClinico")',
+        type: "POST",
+        data: JSON.stringify({ objeto: FichaHistorialClinica }),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            $(".modal-body").LoadingOverlay("hide");
+            debugger;
+
+            if (data.resultado != 0) {
+                cambiar();
+                $("#txtIdHistorialClinica").val(data.resultado);
+                /*  int IdHistorialClinica  txtIdHistorialClinica * /*/
+                // para poder saber cual es el id usuario
+                $("#btBuscar2").click();
+
+
+
+                // La inserción fue exitosa.
+                // Puedes realizar cualquier acción adicional que desees aquí.
+                // Por ejemplo, borrar los campos del formulario o mostrar un mensaje de éxito.
+                swal("Se guardo con exito", "success");
+               
+            } else {
+                swal("Error", data.mensaje, "error")
+            }
+        },
+        error: function (error) {
+            $(".modal-body").LoadingOverlay("hide");
+            $("#mensajeError").text("Error Ajax");
+            $("#mensajeError").show();
+        },
+        beforeSend: function () {
+            $(".modal-body").LoadingOverlay("show", {
+                imageResizeFactor: 2,
+                text: "Cargando...",
+                size: 14
+            });
+        }
+    });
+        }
+
+
+   function Actualizar() {
+
+       var FichaHistorialMedica = {
+           IdHistorialClinica : $("#txtIdHistorialClinica").val(),
+        IdUsuario: $("#txtIdUsuario").val(),
+        MotivoConsulta: $("#txtMOTIVODECONSULTA").val(),
+        AntecedentMadre: $("#txtAntecedentesGineco").val(),
+        e: $("#txtE").val(),
+        ab: $("#txtab").val(),
+        HijosVivos: $("#txtHijosVivos").val(),
+        EstadoSaludHv: $("#txtEstadoSalud").val(),
+        HijosMuerteCausa: $("#txtHijosMuertos").val(),
+        Padres: $("#txtPadres").val(),
+        Otros: $("#txtOtros").val(),
+        PesoNacer: $("#txtPesoNacer").val(),
+        DuracionEmbarazo: $("#txtDuracionEmbarzo").val(),
+        ProblemaGestional: $("#txtProblemasGestionables").val(),
+        MedicinaDuranteEmbarazo: $("#txtMedicamentosEmbarazo").val(),
+        Tabaquismo: $("#txtTabaquismo").val(),
+        Alcohol: $("#txtAlcohol").val(),
+        DuracionParto: $("#txtDuracionTrabajo").val(),
+        SufrimientoFetal: $("#txtSufrumientoFetal").val(),
+
+        Vaginal: $("#txtVaginal").val(),
+        Cesarea: $("#txtCesarea").val(),
+        EstadoNacer: $("#txtEstadoAlNacer").val(),
+
+        Apgar: $("#txtApgar").val(),
+        SostenerCabeza: $("#txtSostenerCabeza").val(),
+        Sonreir: $("#txtSonreir").val(),
+        RodarAlLado: $("#txtRodarAlLado").val(),
+        SentarseSolo: $("#txtSentarseSolo").val(),
+        Pararse: $("#txtPararse").val(),
+        Andar: $("#txtAndar").val(),
+        CaminarSolo: $("#txtCanaminarSolo").val(),
+        Hablar: $("#txtHablar").val(),
+        Vacunaciones: $("#txtVacunaciones").val(),
+        Enfermedades: $("#txtEnfermedades").val(),
+           AntecedentesQx: $("#txtAntecedentesQx").val(),
+           Diagnosticos: $("#txtDiagnosticos").val()
+           
+    }
+
+    jQuery.ajax({
+        url: '@Url.Action("Actualizar", "HistoClinico")',
+        type: "POST",
+        data: JSON.stringify({ objeto: FichaHistorialMedica }),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            $(".modal-body").LoadingOverlay("hide");
+            debugger;
+
+            if (data.resultado != 0) {
+
+                cambiar();
+                // Set the values of txt1oAPELLIDO and txtNOMBRE
+                $("#txt1oAPELLIDO").val($("#txtPrimerApellidob").val());
+                $("#txtNOMBRE").val($("#txtPrimerNombreb").val());
+
+                //para poder saber cual es el id usuario
+                $("#btBuscar2").click();
+
+
+
+
+                // La inserción fue exitosa.
+                // Puedes realizar cualquier acción adicional que desees aquí.
+                // Por ejemplo, borrar los campos del formulario o mostrar un mensaje de éxito.
+                swal("Los cambios se guardaron con exito", "success");
+
+            } else {
+                swal("Error", data.mensaje, "error")
+            }
+        },
+        error: function (error) {
+            $(".modal-body").LoadingOverlay("hide");
+            $("#mensajeError").text("Error Ajax");
+            $("#mensajeError").show();
+        },
+        beforeSend: function () {
+            $(".modal-body").LoadingOverlay("show", {
+                imageResizeFactor: 2,
+                text: "Cargando...",
+                size: 14
+            });
+        }
+    });
+        }
+
+
+
+        //$("#Tratamientoo tbody").on("click touchstart", '.btn-editar', function (event) {
+        //    event.stopPropagation();
+        //    event.preventDefault();
+        //    debugger;
+        //    filaSeleccionada = $(this).closest("tr");
+
+        //    var data = tabladata.row(filaSeleccionada).data();
+        //    console.log(data);
+        //    abrilModal(data);
+
+
+
+
+       
+        $("#Tratamientoo tbody").on("click touchstart", '.btn-editar', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            
+
+            var clickedElement = $(event.target);
+            var isLi = clickedElement.closest("li").length > 0;
+
+
+
+
+
+
+            var filaSeleccionada1 = isLi ? clickedElement.closest("li") : clickedElement.closest("tr");
+
+     
+            var data = tabladata.row(filaSeleccionada1).data();
+          
+        //    abrilModal(data);
+            console.log(data);
+            abrilModal(data);
+        });
+
+
+
+         function Guardar2() {
+            var Tratamiento = {
+                //txtDonante  txtCantidad  cboFundacion
+
+
+                //$("#IdTablaTratamiento").val(json.IdTablaTratamiento);
+                //$("#tratamiento").val(json.tratamiento);
+                //$("#duracion").val(json.duracion);
+                //$("#no").val(json.no);
+                //$("#ft").val(json.ft);
+                //$("#IdHistorialClinica").val(json.IdHistorialClinica);
+                
+                IdTablaTratamiento: $("#txtIdTablaTratamiento").val(),
+                fecha: $("#txtFecha").val(),
+                tratamiento: $("#txtTratamiento").val(),
+                duracion: $("#txtDuracion").val(),
+                no: $("#txtno").val(),
+                ft: $("#txtft").val(),
+                IdHistorialClinica: $("#txtIdHistorialClinica").val(),
+
+            }
+              jQuery.ajax({
+                url: '@Url.Action("GuardarTratamiento", "HistoClinico")',
+                type: "POST",
+                  data: JSON.stringify({ objeto: Tratamiento }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    $(".modal-body").LoadingOverlay("hide");
+
+
+
+                    if (Tratamiento.IdTablaTratamiento == 0) {
+                       
+                        if (data.resultado != 0) {
+                            debugger;
+                            cambiar();
+                            // Set the values of txt1oAPELLIDO and txtNOMBRE
+                            //$("#txt1oAPELLIDO").val($("#txtPrimerApellidob").val());
+                            //$("#txtNOMBRE").val($("#txtPrimerNombreb").val());
+
+                            // para poder saber cual es el id usuario
+                            $("#btBuscar2").click();
+                            //Tratamiento.IdTablaTratamiento = data.resultado;
+                            //tabladata.row.add(Tratamiento).draw(false);
+                            $("#FormUsuario").modal("hide");
+
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+
+
+                    } else {
+
+                        if (data.resultado) {
+                            $("#btBuscar2").click();
+                            $("#FormUsuario").modal("hide");
+
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    }
+
+                  },
+                  error: function (error) {
+                      $(".modal-body").LoadingOverlay("hide");
+                      $("#mensajeError").text("Error Ajax");
+                      $("#mensajeError").show();
+                  },
+                  beforeSend: function () {
+                      $(".modal-body").LoadingOverlay("show", {
+                          imageResizeFactor: 2,
+                          text: "Cargando...",
+                          size: 14
+                      })
+                  }
+
+            });
+
+        }
+
+        $("#Tratamientoo tbody").on("click touchstart", '.btn-eliminar', function (event) {
+
+            event.stopPropagation();
+            event.preventDefault();
+
+
+            var clickedElement = $(event.target);
+            var isLi = clickedElement.closest("li").length > 0;
+
+            var filaSeleccionada = isLi ? clickedElement.closest("li") : clickedElement.closest("tr");
+
+            var data = tabladata.row(filaSeleccionada).data();
+
+            swal({
+                title: "Esta Seguro?",
+                text: "¿Desea eliminar el tratamieno?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-primary",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: true
+            },
+                function () {
+
+                      jQuery.ajax({
+                   url: '@Url.Action("EliminarTratamiento", "HistoClinico")',
+                          type: "POST",
+                          data: JSON.stringify({ id: data.IdTablaTratamiento }),
+                   dataType: "json",
+                   contentType: "application/json; charset=utf-8",
+                   success: function (data) {
+
+                       debugger;
+
+                      if (data.resultado) {
+
+                          tabladata.row(filaSeleccionada).remove().draw();
+                     } else {
+
+                           swal("No se pudo eliminar", data.mensaje, "error")
+                       }
+                  },
+                   error: function (error) {
+                   console.log(error)
+                    }
+               });
+
+
+
+
+                });
+
+            console.log(data)
+
+
+        })
+
+
+
+
+        function LimpiarFormulario() {
+            $("#IdHistorialClinica").val(0), 
+                $("#txtIdHistorialClinica2").val(0),
+                $("#txtIdHistorialClinica").val(0),
+                txtSexo
+            $("#txtSexo").val(""),
+            $("#txtEdad").val(" "),
+                $("#txt1oAPELLIDO").val(" "),
+                $("#txt2DoAPELLIDO").val(" "),
+                $("#txtNOMBRE").val(" "),
+                $("#txtENCARGADO").val(" "),
+
+        $("#txtIdUsuario").val(0),
+                $("#txtMOTIVODECONSULTA").val(" "),
+                $("#txtAntecedentesGineco").val(" "),
+                $("#txtE").val(" "),
+                $("#txtab").val(" "),
+                $("#txtHijosVivos").val(" "),
+                $("#txtHijosMuertos").val(" "),
+                $("#txtPadres").val(" "),
+                $("#txtOtros").val(" "),
+                $("#txtPesoNacer").val(" "),
+                $("#txtDuracionEmbarzo").val(" "),
+                $("#txtProblemasGestionables").val(" "),
+                $("#txtMedicamentosEmbarazo").val(" "),
+                $("#txtTabaquismo").val(" "),
+                $("#txtAlcohol").val(" "),
+                $("#txtDuracionTrabajo").val(" "),
+                $("#txtSufrumientoFetal").val(" "),
+                $("#txtVaginal").val(" "),
+                $("#txtCesarea").val(" "),
+                $("#txtEstadoAlNacer").val(" "),
+
+                $("#txtApgar").val(" "),
+                $("#txtSostenerCabeza").val(" "),
+                $("#txtSonreir").val(" "),
+                $("#txtRodarAlLado").val(" "),
+                $("#txtSentarseSolo").val(" "),
+                $("#txtPararse").val(" "),
+                $("#txtAndar").val(" "),
+                $("#txtCanaminarSolo").val(" "),
+                $("#txtHablar").val(" "),
+                $("#txtVacunaciones").val(" "),
+                $("#txtEnfermedades").val(" "),
+                $("#txtAntecedentesQx").val(" "),
+                $("#txtDiagnosticos").val(" "),   
+            $("#txtFecha").val(" "),
+                $("#txtEstadoSalud").val(" "),
+                $("#txtSexo").val(" "),
+            mostrar();
+            // Repite esto para todos los campos del formulario.
+
+            // También puedes ocultar o cerrar el modal si es relevante.
+
+        }
+
+                $(function () {
+            $("#btBuscar").on("click", function () {
+
+                IdUsuario: $("#txtIdUsuario").val()
+
+                jQuery.ajax({
+                    url: '@Url.Action("VistaUsuario", "FichaUsuario")' +
+                        "?PrimerApellido=" + $("#txtPrimerApellidob").val() +
+                        "&PrimerNombre=" + $("#txtPrimerNombreb").val(),
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        debugger;
+
+                        var ob = data.resultado;
+                        var sexoValue = ob.Sexo;
+                        var textoSexo = (sexoValue === "F") ? "Femenino" : (sexoValue === "M") ? "Masculino" : "";
+                  /*      txtEdad txtSexo txt1oAPELLIDO txt2DoAPELLIDO txtNOMBRE txtENCARGADO*/
+                       $("#txtIdUsuario").val(ob.IdUsuario),
+                        $("#txt1oAPELLIDO").val(ob.PrimerApellido),
+                            $("#txt2DoAPELLIDO").val(ob.SegundoApellido),
+                           $("#txtNOMBRE").val(ob.PrimerNombre),
+                          
+                       
+                           $("#txtSexo").val(textoSexo),
+                            $("#txtEdad").val(ob.Edad),
+                            $("#txtENCARGADO").val(ob.PersonaEncargada)
+
+
+
+                    }
+
+                });
+
+            });
+
+        }
+        )
+
+
+         $(function () {
+            $("#btBuscar2").on("click", function () {
+
+         /*       int IdHistorialClinica  txtIdHistorialClinica*/
+
+                jQuery.ajax({
+                    url: '@Url.Action("VistaFichaHistorial", "HistoClinico")' +
+                        "?IdHistorialClinica=" + $("#txtIdHistorialClinica").val(),
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        debugger;
+
+                        var ob = data.resultado;
+                  /*      txtEdad txtSexo txt1oAPELLIDO txt2DoAPELLIDO txtNOMBRE txtENCARGADO*/
+                        $("#txtIdHistorialClinica").val(ob.IdHistorialClinica),
+                        $("#txtFecha").val(ob.Fecha),
+                            $("#txtEdad").val(ob.Edad),
+                            $("#txtSexo").val(ob.Sexo),
+                            $("#txt1oAPELLIDO").val(ob.PrimerApellido),
+                            $("#txt2DoAPELLIDO").val(ob.SegundoApellido),
+                            $("#txtNOMBRE").val(ob.PrimerNombre),
+                            $("#txtENCARGADO").val(ob.PersonaEncargada),
+
+                            $("#txtIdUsuario").val(ob.IdUsuario),
+                            $("#txtMOTIVODECONSULTA").val(ob.MotivoConsulta),
+                            $("#txtAntecedentesGineco").val(ob.AntecedentMadre),
+                            $("#txtE").val(ob.e),
+                            $("#txtab").val(ob.ab),
+                            $("#txtHijosVivos").val(ob.HijosVivos),
+
+                            $("#txtEstadoSalud").val(ob.EstadoSaludHv),
+                            $("#txtHijosMuertos").val(ob.HijosMuerteCausa),
+                            $("#txtPadres").val(ob.Padres),
+                            $("#txtOtros").val(ob.Otros1),
+                            $("#txtPesoNacer").val(ob.PesoNacer),
+                            $("#txtDuracionEmbarzo").val(ob.DuracionEmbarazo),
+                            $("#txtProblemasGestionables").val(ob.ProblemaGestional),
+                            $("#txtMedicamentosEmbarazo").val(ob.MedicinaDuranteEmbarazo),
+                            $("#txtTabaquismo").val(ob.Tabaquismo),
+                            $("#txtAlcohol").val(ob.Alcohol),
+                            $("#txtDuracionTrabajo").val(ob.DuracionParto),
+                            $("#txtSufrumientoFetal").val(ob.SufrimientoFetal),
+                            $("#txtVaginal").val(ob.Vaginal),
+                            $("#txtCesarea").val(ob.Cesarea),
+                            $("#txtEstadoAlNacer").val(ob.EstadoNacer),
+
+                            $("#txtApgar").val(ob.Apgar),
+                            $("#txtSostenerCabeza").val(ob.SostenerCabeza),
+                            $("#txtSonreir").val(ob.Sonreir),
+                            $("#txtRodarAlLado").val(ob.RodarAlLado),
+                            $("#txtSentarseSolo").val(ob.SentarseSolo),
+                            $("#txtPararse").val(ob.Pararse),
+                            $("#txtAndar").val(ob.Andar),
+                            $("#txtCanaminarSolo").val(ob.CaminarSolo),
+                            $("#txtHablar").val(ob.Hablar),
+                            $("#txtVacunaciones").val(ob.Vacunaciones),
+                            $("#txtEnfermedades").val(ob.Enfermedades),
+                            $("#txtAntecedentesQx").val(ob.AntecedentesQx),
+                            $("#txtDiagnosticos").val(ob.Diagnosticos),
+                            
+                    
+                        mostrar();
+                        cambiar();
+
+
+                    }
+
+                });
+
+            });
+
+        }
+        )
+        function cambiar() {
+
+            var ci = document.getElementById('txtIdHistorialClinica').value;
+            document.getElementById('txtIdHistorialClinica2').value = ci;
+
+        }
+
+
+
+        
+
+
+
+    </script>
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

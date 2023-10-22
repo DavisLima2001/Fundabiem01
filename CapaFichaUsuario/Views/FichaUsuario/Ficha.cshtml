@@ -1,0 +1,528 @@
+﻿
+@{
+    ViewBag.Title = "Ficha";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div class="card">
+
+    <div class="card-header text-center">
+        <!-- Agrega la clase "text-center" -->
+        <h1>DEPARTAMENTO DE REGISTROS MEDICOS</h1>
+    </div>
+    <div class="card-body">
+        <div id="Botones" class="form-group">
+
+
+
+
+
+            <div class="row" id="miFila">
+                <div class="col-md-3 col-12 ">
+                    <!-- Agrega un formulario o campos de entrada aquí -->
+                    <!-- Botón Guardar -->
+                    <button type="button" class="btn btn-primary" onclick="Guardar()"> <i class="fas fa-save"></i> Guardar</button>
+                    <br />
+                    <br />
+                </div>
+                <br />
+                <div class="col-md-3 col-12 ">
+                    <!-- Botón Actualizar -->
+                    <button type="button" class="btn btn-success" onclick="Actualizar()"> <i class="fas fa-sync"></i> Actualizar</button>
+                    <br />
+                    <br />
+                </div>
+                <br />
+                <div class="col-md-3 col-12 ">
+
+                    <!-- Botón limpiar -->
+                    <button type="button" class="btn btn-success" onclick="LimpiarFormulario()"> <i class="fas fa-eraser"></i> Limpiar</button>
+                    <br />
+                    <br />
+                </div>
+                <br />
+                <div class="col-md-3 col-12 ">
+
+                    <!-- Botón imprimir -->
+                    <button type="button" class="btn btn-dark" onclick="print()"> <i class="fas fa-print"></i> imprimir</button>
+                    <br />
+                    <br />
+
+                </div>
+
+            </div>
+
+            <div class="row" id="miFila">
+                <div class="col-md-4 col-12 ">
+                    <label for="txtApellido1" class="col-form-label">1er. Apellido: </label>
+                    <input type="text" class="form-control" id="txtPrimerApellidob" autocomplete="off">
+                </div>
+                <div class="col-md-4 col-12 ">
+                    <label for="txtNombre1" class="col-form-label">1er. Nombre: </label>
+                    <input type="text" class="form-control" id="txtPrimerNombreb" autocomplete="off">
+                </div>
+                <div class="col-md-4 col-12 ">
+
+                    <!-- Botón Buscar -->
+                    <button type="button" class="btn btn-info" id="btBuscar"> <i class="fas fa-search"></i> Buscar</button>
+                </div>
+            </div>
+            <input id="txtIdUsuario" placeholder="Ingrese Id del Usuario" type="hidden">
+
+        </div>
+        <br />
+        @*<div class="row">*@
+        <input id="txtIdUsuario" value="0" type="hidden">
+        <div class="row" id="miFila">
+            <div class="col-md-3 col-12 ">
+                <label for="txtApellido1" class="col-form-label">1er. Apellido: </label>
+                <input type="text" class="form-control" id="txtPrimerApellido" autocomplete="off">
+            </div>
+            <div class="col-md-3 col-12 ">
+                <label for="txtApellido2" class="col-form-label">2o. Apellido: </label>
+                <input type="text" class="form-control" id="txtSegundoApellido" autocomplete="off">
+            </div>
+            <div class="col-md-2 col-12 ">
+                <label for="txtNombre1" class="col-form-label">1er. Nombre: </label>
+                <input type="text" class="form-control" id="txtPrimerNombre" autocomplete="off">
+            </div>
+            <div class="col-md-2 col-12 ">
+                <label for="txtNombre2" class="col-form-label">2o. Nombre: </label>
+                <textarea class="form-control" id="txtSegundoNombre" autocomplete="off"></textarea>
+            </div>
+            <div class="col-md-2 col-12 ">
+                <label for="txtHrClinico" class="col-form-label">Hr.Clínico: </label>
+                <textarea class="form-control" id="txtHrClinico" autocomplete="off" readonly></textarea>
+            </div>
+        </div>
+
+        <!-- Segunda fila: 5 columnas -->
+        <div class="row" id="miFila">
+            <div class="col-md-3 col-12 ">
+                <label for="txtHrClinico" class="col-form-label">Sexo: </label>
+
+                <select class="form-control" id="txtSexo" autocomplete="off">
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                   
+                </select>
+                @*<textarea class="form-control" id="txtSexo" autocomplete="off"></textarea>*@
+            </div>
+            <div class="col-md-2 col-12 ">
+                <label for="txtEdad" class="col-form-label">Edad: </label>
+                <input type="text" class="form-control" id="txtEdad" autocomplete="off">
+            </div>
+            <div class="col-md-3 col-12 ">
+                <label for="txtFechaNacimiento" class="col-form-label">Fecha Nacimiento: </label>
+                <input type="text" class="form-control" id="txtFechaNacimiento" autocomplete="off">
+            </div>
+            <div class="col-md-2 col-12 ">
+                <label for="txtGrupoTecnico" class="col-form-label">Grupo Técnico: </label>
+                <input type="text" class="form-control" id="txtGrupoTecnico" autocomplete="off">
+            </div>
+            <div class="col-md-2 col-12 ">
+                <label for="txtOtros" class="col-form-label">Otros: </label>
+                <input type="text" class="form-control" id="txtOtros" autocomplete="off">
+            </div>
+        </div>
+
+        <!-- Tercera fila: 2 columnas -->
+        <div class="row" id="miFila">
+            <div class="col-md-6 col-12 ">
+                <label for="txtOtros" class="col-form-label">Direccion : </label>
+                <input type="text" class="form-control" id="txtDireccion2" autocomplete="off">
+            </div>
+            <div class="col-md-6 col-12 ">
+                <label for="txtOtros" class="col-form-label">Departamento : </label>
+                <input type="text" class="form-control" id="txtDepartamento" autocomplete="off">
+            </div>
+        </div>
+
+        <!-- Cuarta fila: 4 columnas -->
+        <div class="row" id="miFila">
+            @*<div class="col-md-2 col-12 ">
+                <label for="txtOtros" class="col-form-label">Regidencia Habitural : </label>
+                <input type="text" class="form-control" id="txtRegidencia" autocomplete="off">
+            </div>*@
+
+            <div class="col-md-4 col-12 ">
+                <label for="txtOtros" class="col-form-label">Ciudad : </label>
+                <input type="text" class="form-control" id="txtCiudad" autocomplete="off">
+            </div>
+            <div class="col-md-4 col-12 ">
+                <label for="txtOtros" class="col-form-label">Departamento : </label>
+                <input type="text" class="form-control" id="txtOtros" autocomplete="off">
+            </div>
+            <div class="col-md-4 col-12 ">
+                <label for="txtOtros" class="col-form-label">Pais : </label>
+                <input type="text" class="form-control" id="txtPais" autocomplete="off">
+            </div>
+        </div>
+
+        <!-- Quinta fila: 2 columnas -->
+        <div class="row" id="miFila">
+            <div class="col-md-6 col-12 ">
+                <label for="txtOtros" class="col-form-label">Residencia Habitual : </label>
+                <input type="text" class="form-control" id="txtRegidencia" autocomplete="off">
+            </div>
+
+            <div class="col-md-6 col-12 ">
+                <label for="txtOtros" class="col-form-label">Lugar : </label>
+                <input type="text" class="form-control" id="txtLugar" autocomplete="off">
+            </div>
+        </div>
+
+        <!-- Sexta fila: 2 columnas -->
+        <div class="row" id="miFila">
+
+            <div class="col-md-6 col-12 ">
+                <label for="txtOtros" class="col-form-label">Padre : </label>
+                <input type="text" class="form-control" id="txtPadre" autocomplete="off">
+            </div>
+            <div class="col-md-6 col-12 ">
+                <label for="txtOtros" class="col-form-label">Madre : </label>
+                <input type="text" class="form-control" id="txtMadre" autocomplete="off">
+            </div>
+        </div>
+
+        <!-- septima fila: 3 columnas -->
+        <div class="row" id="miFila">
+
+            <div class="col-md-4 col-12 ">
+                <label for="txtOtros" class="col-form-label">Persona Encargada : </label>
+                <input type="text" class="form-control" id="txtPersonaEncargada" autocomplete="off">
+            </div>
+            <div class="col-md-4 col-12 ">
+                <label for="txtOtros" class="col-form-label">Direccion : </label>
+                <input type="text" class="form-control" id="txtDireccion" autocomplete="off">
+            </div>
+            <div class="col-md-4 col-12 ">
+                <label for="txtOtros" class="col-form-label">Telefono : </label>
+                <input type="text" class="form-control" id="txtTelefono" autocomplete="off">
+            </div>
+        </div>
+        <!-- optaba fila: 2 columnas -->
+        <div class="row" id="miFila">
+
+            <div class="col-md-6 col-12 ">
+                <label for="txtOtros" class="col-form-label">Fecha / Hora de admision : </label>
+                <input type="text" class="form-control" id="txtFechaHoraAdmicion" autocomplete="off"  readonly>
+            </div>
+            <div class="col-md-6 col-12 ">
+                <label for="txtOtros" class="col-form-label">Firma : </label>
+                <input type="text" class="form-control" id="txtFirma" autocomplete="off" readonly>
+                <input type="hidden" class="form-control" value="Por escrito" id="txtFirma2" autocomplete="off" >
+            </div>
+        </div>
+        <!-- novena fila: 1 columnas -->
+        <div class="row" id="miFila">
+
+            <div class="col-md-6 col-12 ">
+                <label for="txtOtros" class="col-form-label">Diaganostico Final : </label>
+                <textarea class="form-control" id="txtDiagnosticoFinal" autocomplete="off"></textarea>
+            </div>
+
+        </div>
+        <!-- decima fila: 1 columnas -->
+        <div class="row" id="miFila">
+
+            <div class="col-md-6 col-12 ">
+                <label for="txtOtros" class="col-form-label">Recomendaciones : </label>
+                <textarea class="form-control" id="txtRecomendaciones" autocomplete="off"></textarea>
+            </div>
+
+        </div>
+        @*</div>*@
+        <hr />
+        @*<table id="tabla" class="display  cell-border" style="width:100%">
+            <thead>
+
+                <tr>
+                    <th>Id</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Rol</th>
+                    <th>Correo</th>
+                    <th>Clave</th>
+                    <th>Activo</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+
+
+            <tbody>
+            </tbody>
+        </table>*@
+
+    </div>
+</div>
+
+
+
+
+
+@section scripts{
+
+    <script>
+        var tabladata;
+        var filaSeleccionada;
+
+
+
+
+        //txtIdUsuario  txtPrimerApellido txtSegundoApellido txtPrimerNombre txtSegundoNombre txtSexo txtEdad txtFechaNacimiento
+        //txtGrupoTecnico txtOtros txtDireccion2 txtDepartamento txtCiudad txtPais txtLugar txtPadre txtMadre txtPersonaEncargada
+        //txtDireccion txtTelefono txtDiagnosticoFinal txtRecomendaciones txtRegidencia txtFirma
+
+    function Guardar() {
+    debugger;
+    var Usuario = {
+        IdUsuario: $("#txtIdUsuario").val(),
+        PrimerApellido: $("#txtPrimerApellido").val(),
+        SegundoApellido: $("#txtSegundoApellido").val(),
+        PrimerNombre: $("#txtPrimerNombre").val(),
+        SegundoNombre: $("#txtSegundoNombre").val(),
+        Sexo: $("#txtSexo").val(),
+        Edad: $("#txtEdad").val(),
+        FechaNacimiento: $("#txtFechaNacimiento").val(),
+        GrupoTecnico: $("#txtGrupoTecnico").val(),
+        Otros: $("#txtOtros").val(),
+        Direccion2: $("#txtDireccion2").val(),
+        Departamento: $("#txtDepartamento").val(),
+        Ciudad: $("#txtCiudad").val(),
+        Pais: $("#txtPais").val(),
+        Residencia: $("#txtRegidencia").val(),
+        Lugar: $("#txtLugar").val(),
+        Padre: $("#txtPadre").val(),
+        Madre: $("#txtMadre").val(),
+        PersonaEncargada: $("#txtPersonaEncargada").val(),
+        Direccion: $("#txtDireccion").val(),
+        Telefono: $("#txtTelefono").val(),
+        Firma: $("#txtFirma2").val(),
+        DiagnosticoFinal: $("#txtDiagnosticoFinal").val(),
+        Recomendaciones: $("#txtRecomendaciones").val()
+    }
+
+    jQuery.ajax({
+        url: '@Url.Action("GuardarUsuarios2", "FichaUsuario")',
+        type: "POST",
+        data: JSON.stringify({ objeto: Usuario }),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            $(".modal-body").LoadingOverlay("hide");
+            debugger;
+
+            if (data.resultado != 0) {
+
+
+
+                LimpiarFormulario();
+
+                swal("Se guardo con exito", "success");
+                
+            } else {
+                swal("Error", data.mensaje, "error")
+            }
+        },
+        error: function (error) {
+            $(".modal-body").LoadingOverlay("hide");
+            $("#mensajeError").text("Error Ajax");
+            $("#mensajeError").show();
+        },
+        beforeSend: function () {
+            $(".modal-body").LoadingOverlay("show", {
+                imageResizeFactor: 2,
+                text: "Cargando...",
+                size: 14
+            });
+        }
+    });
+        }
+
+
+   function Actualizar() {
+
+    var Usuario = {
+        IdUsuario: $("#txtIdUsuario").val(),
+        PrimerApellido: $("#txtPrimerApellido").val(),
+        SegundoApellido: $("#txtSegundoApellido").val(),
+        PrimerNombre: $("#txtPrimerNombre").val(),
+        SegundoNombre: $("#txtSegundoNombre").val(),
+        Sexo: $("#txtSexo").val(),
+        Edad: $("#txtEdad").val(),
+        FechaNacimiento: $("#txtFechaNacimiento").val(),
+        GrupoTecnico: $("#txtGrupoTecnico").val(),
+        Otros: $("#txtOtros").val(),
+        Direccion2: $("#txtDireccion2").val(),
+        Departamento: $("#txtDepartamento").val(),
+        Ciudad: $("#txtCiudad").val(),
+        Pais: $("#txtPais").val(),
+        Residencia: $("#txtRegidencia").val(),
+        Lugar: $("#txtLugar").val(),
+        Padre: $("#txtPadre").val(),
+        Madre: $("#txtMadre").val(),
+        PersonaEncargada: $("#txtPersonaEncargada").val(),
+        Direccion: $("#txtDireccion").val(),
+        Telefono: $("#txtTelefono").val(),
+        Firma: $("#txtFirma2").val(),
+        DiagnosticoFinal: $("#txtDiagnosticoFinal").val(),
+        Recomendaciones: $("#txtRecomendaciones").val()
+    }
+
+    jQuery.ajax({
+        url: '@Url.Action("Actualizar", "FichaUsuario")',
+        type: "POST",
+        data: JSON.stringify({ objeto: Usuario }),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            $(".modal-body").LoadingOverlay("hide");
+            debugger;
+
+            if (data.resultado != 0) {
+
+
+
+
+
+                swal("Los cambios se guardaron con exito", "success");
+                LimpiarFormulario();
+            } else {
+                swal("Error", data.mensaje, "error")
+            }
+        },
+        error: function (error) {
+            $(".modal-body").LoadingOverlay("hide");
+            $("#mensajeError").text("Error Ajax");
+            $("#mensajeError").show();
+        },
+        beforeSend: function () {
+            $(".modal-body").LoadingOverlay("show", {
+                imageResizeFactor: 2,
+                text: "Cargando...",
+                size: 14
+            });
+        }
+    });
+        }
+
+
+
+        function LimpiarFormulario() {
+           
+            $("#txtIdUsuario").val(0)
+      $("#txtPrimerApellido").val(" "),
+          $("#txtSegundoApellido").val(" "),
+          $("#txtPrimerNombre").val(" "),
+          $("#txtSegundoNombre").val(" "),
+          $ ("#txtSexo").val(" "),
+          $ ("#txtEdad").val(0),
+          $ ("#txtFechaNacimiento").val(" "),
+          $ ("#txtFechaNacimiento").val(" "),
+          $  ("#txtGrupoTecnico").val(" "),
+          $  ("#txtOtros").val(" "),
+          $  ("#txtDireccion2").val(" "),
+          $  ("#txtDepartamento").val(" "),
+          $  ("#txtCiudad").val(" "),
+          $  ("#txtPais").val(" "),
+          $ ("#txtLugar").val(" "),
+          $ ("#txtPadre").val(" "),
+          $ ("#txtMadre").val(" "),
+          $ ("#txtPersonaEncargada").val(" "),
+          $("#txtDireccion").val(" "),
+          $("#txtTelefono").val(" "),
+          $("#txtDiagnosticoFinal").val(" "),
+          $("#txtRecomendaciones").val(" "),
+        /*  $("#txtFirma").val(""),*/
+          $("#txtRegidencia").val(" ")
+          
+
+        }
+
+                $(function () {
+            $("#btBuscar").on("click", function () {
+
+                
+
+               /* txtPrimerApellidob txtPrimerNombreb*/
+                jQuery.ajax({
+                    url: '@Url.Action("VistaUsuario", "FichaUsuario")' +
+                        "?PrimerApellido=" + $("#txtPrimerApellidob").val() +
+                        "&PrimerNombre=" + $("#txtPrimerNombreb").val(),
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        debugger;
+                        if (data && data.resultado) {
+                            var ob = data.resultado;
+
+                            $("#txtIdUsuario").val(ob.IdUsuario),
+                                $("#txtPrimerApellido").val(ob.PrimerApellido),
+                                $("#txtSegundoApellido").val(ob.SegundoApellido),
+                                $("#txtPrimerNombre").val(ob.PrimerNombre),
+                                $("#txtSegundoNombre").val(ob.SegundoNombre),
+                                $("#txtSexo").val(ob.Sexo),
+                                $("#txtEdad").val(ob.Edad),
+                                $("#txtFechaNacimiento").val(ob.FechaNacimiento),
+                                /*$("#txtFirma").val(ob.FechaNacimiento),*/
+
+                                $("#txtFechaHoraAdmicion").val(ob.GrupoTecnico),
+                                $("#txtGrupoTecnico").val(ob.GrupoTecnico),
+                                $("#txtOtros").val(ob.Otros),
+                                $("#txtDireccion2").val(ob.Direccion2),
+                                $("#txtDepartamento").val(ob.Departamento),
+                                $("#txtCiudad").val(ob.Ciudad),
+                                $("#txtPais").val(ob.Pais),
+                                $("#txtRegidencia").val(ob.Residencia),
+                                $("#txtLugar").val(ob.Lugar),
+                                $("#txtPadre").val(ob.Padre),
+                                $("#txtMadre").val(ob.Madre),
+                                $("#txtPersonaEncargada").val(ob.PersonaEncargada),
+                                $("#txtDireccion").val(ob.Direccion),
+                                $("#txtTelefono").val(ob.Telefono),
+                                $("#txtFechaHoraAdmicion").val(ob.FechaHoraAdmicion),
+                                $("#txtFirma2").val(ob.Firma),
+                                $("#txtDiagnosticoFinal").val(ob.DiagnosticoFinal),
+                                $("#txtRecomendaciones").val(ob.Recomendaciones)
+
+                        } else {
+                            // Mostrar mensaje si no se encontraron datos
+                            swal("No se encontraron datos", "No hay resultados para la búsqueda.", "warning");
+                        }
+
+
+
+                    },
+                    error: function () {
+                        // Manejar errores de la solicitud AJAX
+                        swal("No se encontraron datos", "Busca el usuario correcto.", "warning");
+                    }
+                        
+
+                    
+
+                });
+
+            });
+
+        }
+        )
+
+
+
+
+       
+
+
+    </script>
+
+}
+
+
+
+
+
