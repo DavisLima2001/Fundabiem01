@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*hola mundo*/
 namespace CapaEntidad
 {
   public  class BuscarFichaEvolucionMedica
