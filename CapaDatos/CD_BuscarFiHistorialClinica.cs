@@ -7,7 +7,7 @@ using CapaEntidad;
 using System.Data.SqlClient;
 using System.Data;
 using System.IO;
-
+/*hola mundo*/
 namespace CapaDatos
 {
     public   class CD_BuscarFiHistorialClinica
